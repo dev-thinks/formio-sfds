@@ -62,7 +62,7 @@ Before you can translate a form, you'll need to do some one-time setup in both P
 
       > ![image](https://user-images.githubusercontent.com/113896/97367809-00db4400-1867-11eb-8115-dca7ca108504.png)
 
-1. Visit `https://formio-sfds.vercel.app/api/translate?url=<URL>`, where `<URL>` is the URL of your form _on sf.gov_
+1. Visit [/api/translate?url=`<URL>`](https://formio-sfds.vercel.app/api/translate?url=<URL>), where `<URL>` is the URL of your form _on sf.gov_
 1. When the form loads, you should see a modal dialog to log in to Phrase
 
 Once you've logged in, you should see a blue bar across the bottom and pencil icon markers above each piece of translatable form content:
