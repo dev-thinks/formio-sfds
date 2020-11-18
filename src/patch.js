@@ -174,7 +174,7 @@ function patch (Formio) {
       if (opts.disableConditionals) {
         disableConditionals(model.components)
       }
-      patchSelectMode(model)
+      patchSelectWidget(model.components)
       form.form = model
 
       for (const [event, handler] of Object.entries(eventHandlers)) {
@@ -227,8 +227,8 @@ function patch (Formio) {
   })
 }
 
-function patchSelectMode (model) {
-  const selects = util.searchComponents(model.components, { type: 'select' })
+function patchSelectWidget (components) {
+  const selects = util.searchComponents(components, { type: 'select' })
   for (const component of selects) {
     if (component.tags && component.tags.includes('autocomplete')) {
       component.customOptions = Object.assign({
