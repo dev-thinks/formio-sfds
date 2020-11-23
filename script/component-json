@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+const name = process.argv[2]
+const component = require(`../src/components/schema/${name}`)
+console.log(JSON.stringify(component, null, 2))
