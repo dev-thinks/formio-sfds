@@ -108,5 +108,27 @@
   "words": "words",
   "year": "Year",
   "Year": "Year",
-  "Yes, delete it": "Yes, delete it"
+  "Yes, delete it": "Yes, delete it",
+  "components": {
+    "mailingAddressFieldset": {
+      "legend": "Mailing address"
+    },
+    "addressLine1": {
+      "label": "Address line 1"
+    },
+    "addressLine2": {
+      "label": "Address line 2"
+    },
+    "city": {
+      "label": "City"
+    },
+    "addressStateAndZIP": {},
+    "state": {
+      "label": "State"
+    },
+    "zipCode": {
+      "label": "ZIP code",
+      "errors.pattern": "Please enter a 5-digit <a href=\"https://en.wikipedia.org/wiki/ZIP_Code\">ZIP code</a>"
+    }
+  }
 }

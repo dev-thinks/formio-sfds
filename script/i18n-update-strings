@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+const fs = require('fs')
+const dot = require('dotmap')
+const stringsPath = require.resolve('../src/i18n/en.json')
+const strings = require(stringsPath)
+const shared = require('../src/components/schema/shared')
+const { eachComponent } = require('../lib/i18n')
+
+if (!strings.components) {
+  strings.components = {}
+}
+
+eachComponent(shared.components, (comp, index, parents) => {
+  if (comp.properties) {
+    const id = comp.properties.sfdsComponentId
+    const keys = {}
+    let hasKeys = false
+    for (const prop in comp.properties) {
+      if (/^[a-z]{2,}:/.test(prop)) {
+        const [lang, key] = prop.split(':')
+        if (!keys[key]) {
+          console.warn('[%s] inferred translation from property "%s": "%s" (%s)', id, prop, comp.properties[prop], lang)
+          keys[key] = dot.get(comp, key)
+          hasKeys = true
+        }
+      }
+    }
+    if (hasKeys) {
+      strings.components[id] = Object.assign({}, strings.components[id], keys)
+    } else {
+      console.warn('[%s] no keys found', id)
+    }
+  }
+})
+
+fs.writeFileSync(stringsPath, JSON.stringify(strings, null, 2), 'utf8')
