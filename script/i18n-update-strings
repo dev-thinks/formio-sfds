@@ -1,27 +1,31 @@
 #!/usr/bin/env node
 const fs = require('fs')
-const dot = require('dotmap')
+const dot = require('dot-component')
 const stringsPath = require.resolve('../src/i18n/en.json')
 const strings = require(stringsPath)
 const shared = require('../src/components/schema/shared')
 const { eachComponent } = require('../lib/i18n')
 
-if (!strings.components) {
-  strings.components = {}
-}
-
-eachComponent(shared.components, (comp, index, parents) => {
+eachComponent(shared.components, comp => {
   if (comp.properties) {
+    if (!strings.components) {
+      strings.components = {}
+    }
+
     const id = comp.properties.sfdsComponentId
     const keys = {}
     let hasKeys = false
     for (const prop in comp.properties) {
       if (/^[a-z]{2,}:/.test(prop)) {
+        // eslint-disable-next-line no-unused-vars
         const [lang, key] = prop.split(':')
-        if (!keys[key]) {
-          console.warn('[%s] inferred translation from property "%s": "%s" (%s)', id, prop, comp.properties[prop], lang)
-          keys[key] = dot.get(comp, key)
-          hasKeys = true
+        if (!(key in keys)) {
+          const val = getValue(comp, key)
+          if (val) {
+            console.warn('%s.%s = %s', id, key, JSON.stringify(val))
+            dot.set(keys, key, val)
+            hasKeys = true
+          }
         }
       }
     }
@@ -34,3 +38,14 @@ eachComponent(shared.components, (comp, index, parents) => {
 })
 
 fs.writeFileSync(stringsPath, JSON.stringify(strings, null, 2), 'utf8')
+
+function getValue (comp, key) {
+  if (key.startsWith('values.')) {
+    // eslint-disable-next-line no-unused-vars
+    const [prefix, value] = key.split('.')
+    const item = comp.data.values.find(v => v.value === value)
+    return item && item.label
+  } else {
+    return dot.get(comp, key)
+  }
+}
