@@ -11,11 +11,10 @@ module.exports = function t (component, keys) {
     for (const key of keys) {
       const stringId = `components.${component}.${key}`
       const translation = get(translations[lang], stringId)
-      if (translation) {
-        props[`${lang}:${key}`] = translation
-      } else {
+      if (!translation) {
         console.warn('[%s] missing translation: "%s"', lang, stringId)
       }
+      props[`${lang}:${key}`] = translation || ''
     }
   }
   return props
