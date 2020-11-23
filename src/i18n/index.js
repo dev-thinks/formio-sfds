@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   en: require('./en.json'),
   es: require('./es.json'),
   tl: require('./tl.json'),
