@@ -26,8 +26,7 @@ module.exports = async (req, res) => {
       `)
     )
 
-    proxy.transform(query)
-
+    proxy.transform()
     proxy.send(res)
   } catch (error) {
     res.statusCode = 500

@@ -7,7 +7,8 @@ module.exports = async (req, res) => {
   try {
     const proxy = new Proxy(query)
     await proxy.fetch(query.url || path)
-    proxy.transform(query)
+
+    proxy.transform()
     proxy.appendScript(`
       window.setLanguage = function (lang) {
         for (var id in Formio.forms) {
