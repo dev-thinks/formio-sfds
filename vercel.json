@@ -29,5 +29,8 @@
     "env": {
       "I18N_SERVICE_URL": "https://translate.sf.gov"
     }
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
